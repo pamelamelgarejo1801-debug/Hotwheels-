@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ramo de Hot Wheels ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, #ff1493 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 40%, #ff69b4 0 3px, transparent 4px),
+        linear-gradient(135deg, #210018, #7a004c, #ff0080);
+    background-size: 90px 90px, 120px 120px, cover;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* CORAZONES DEL FONDO */
+.heart {
+    position: fixed;
+    color: rgba(255,255,255,.25);
+    font-size: 25px;
+    animation: flotar 7s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes flotar {
+    0% {
+        transform: translateY(110vh) scale(.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-10vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* CONTENEDOR */
+.container {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 25px 18px;
+    text-align: center;
+    position: relative;
+}
+
+/* TITULO */
+.logo {
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: .8;
+    margin-bottom: 35px;
+}
+
+/* PANTALLA DE CARGA */
+#loading {
+    position: fixed;
+    inset: 0;
+    background: #050505;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-box {
+    text-align: center;
+    width: 85%;
+}
+
+.loading-box h1 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    color: #66d9ff;
+    margin-bottom: 25px;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 8px;
+    background: #222;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00c8ff, #ffffff);
+    transition: width .1s linear;
+}
+
+#percent {
+    display: block;
+    margin-top: 15px;
+    color: #62ddff;
+    font-size: 22px;
+}
+
+/* CONTENIDO */
+#contenido {
+    display: none;
+    animation: aparecer 1.5s ease;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.titulo {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    color: #d9ecff;
+    margin-bottom: 20px;
+}
+
+/* RAMO */
+.ramo {
+    position: relative;
+    width: 260px;
+    height: 280px;
+    margin: 0 auto 25px;
+}
+
+.flor {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 10%, #64b9ff 12% 35%, #1673d1 38% 70%, #063c80);
+    box-shadow: 0 0 15px #4dbfff;
+    animation: balancear 3s ease-in-out infinite;
+}
+
+.flor:nth-child(1) {
+    top: 20px;
+    left: 90px;
+}
+
+.flor:nth-child(2) {
+    top: 70px;
+    left: 35px;
+}
+
+.flor:nth-child(3) {
+    top: 75px;
+    right: 30px;
+}
+
+.flor:nth-child(4) {
+    top: 125px;
+    left: 80px;
+}
+
+.flor:nth-child(5) {
+    top: 135px;
+    right: 55px;
+}
+
+.flor:nth-child(6) {
+    top: 135px;
+    left: 30px;
+}
+
+@keyframes balancear {
+    0%,100% {
+        transform: rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(4deg);
+    }
+}
+
+/* AUTOS */
+.auto {
+    width: 150px;
+    height: 100px;
+    object-fit: contain;
+    position: absolute;
+    filter: drop-shadow(0 5px 8px black);
+    animation: autoFlota 3s ease-in-out infinite;
+}
+
+.auto1 {
+    top: 25px;
+    left: 55px;
+}
+
+.auto2 {
+    top: 80px;
+    right: 0;
+}
+
+.auto3 {
+    top: 130px;
+    left: 0;
+}
+
+@keyframes autoFlota {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* CARRUSEL */
+.carousel {
+    width: 100%;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    margin-top: 20px;
+}
+
+.card {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(.8);
+    transition: all .8s ease;
+}
+
+.card.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 18px;
+}
+
+/* PANEL DE CÓDIGO */
+.code {
+    margin-top: 25px;
+    background: #07131c;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: left;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    box-shadow: 0 8px 30px rgba(0,0,0,.5);
+}
+
+.code-title {
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.orange {
+    color: #ff9d00;
+}
+
+.blue {
+    color: #55d6ff;
+}
+
+.green {
+    color: #75e06f;
+}
+
+/* BOTÓN */
+button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- CORAZONES -->
+<script>
+for(let i = 0; i < 30; i++){
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+    heart.innerHTML = "♡";
+
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.animationDelay = Math.random() * 7 + "s";
+    heart.style.fontSize = (15 + Math.random() * 35) + "px";
+
+    document.body.appendChild(heart);
+}
+</script>
+
+
+<!-- PANTALLA DE CARGA -->
+
+<div id="loading">
+
+    <div class="loading-box">
+
+        <h1>
+            Cargando tu ramo de<br>
+            Hot Wheels...
+        </h1>
+
+        <div class="loading-bar">
+            <div class="loading-progress" id="progress"></div>
+        </div>
+
+        <span id="percent">0%</span>
+
+    </div>
+
+</div>
+
+
+<!-- CONTENIDO -->
+
+<div class="container" id="contenido">
+
+    <div class="logo">
+        ALEX DEV
+    </div>
+
+    <h1 class="titulo">
+        Feliz Día de los<br>
+        Carritos de Hot Wheels
+    </h1>
+
+
+    <!-- RAMO -->
+
+    <div class="ramo">
+
+        <div class="flor"></div>
+        <div class="flor"></div>
+        <div class="flor"></div>
+        <div class="flor"></div>
+        <div class="flor"></div>
+        <div class="flor"></div>
+
+        <!-- CAMBIA ESTOS NOMBRES POR TUS FOTOS -->
+
+        <img src="hotwheels1.png" class="auto auto1">
+        <img src="hotwheels2.png" class="auto auto2">
+        <img src="hotwheels3.png" class="auto auto3">
+
+    </div>
+
+
+    <!-- CARRUSEL -->
+
+    <div class="carousel">
+
+        <div class="card active">
+            <img src="hotwheels1.png">
+        </div>
+
+        <div class="card">
+            <img src="hotwheels2.png">
+        </div>
+
+        <div class="card">
+            <img src="hotwheels3.png">
+        </div>
+
+        <div class="card">
+            <img src="hotwheels4.png">
+        </div>
+
+    </div>
+
+
+    <!-- CÓDIGO VISUAL -->
+
+    <div class="code">
+
+        <div class="code-title">
+            hot_wheels.js
+        </div>
+
+        <div>
+            <span class="orange">.Hot_Wheels</span> {
+        </div>
+
+        <div>
+            &nbsp;&nbsp;position:
+            <span class="blue">absolute</span>;
+        </div>
+
+        <div>
+            &nbsp;&nbsp;width:
+            <span class="green">92px</span>;
+        </div>
+
+        <div>
+            &nbsp;&nbsp;font-size:
+            <span class="green">20px</span>;
+        </div>
+
+        <div>
+            &nbsp;&nbsp;transform:
+            <span class="blue">translateX(-50%)</span>;
+        </div>
+
+        <div>
+            &nbsp;&nbsp;background:
+            <span class="green">#000</span>;
+        </div>
+
+        <div>}</div>
+
+    </div>
+
+
+    <button onclick="siguiente()">
+        Ver siguiente 🚗
+    </button>
+
+</div>
+
+
+<script>
+
+/* CARGADOR */
+
+let porcentaje = 0;
+
+const progress = document.getElementById("progress");
+const percent = document.getElementById("percent");
+
+const carga = setInterval(() => {
+
+    porcentaje++;
+
+    progress.style.width = porcentaje + "%";
+    percent.textContent = porcentaje + "%";
+
+    if(porcentaje >= 100){
+
+        clearInterval(carga);
+
+        setTimeout(() => {
+
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("contenido").style.display = "block";
+
+        }, 500);
+    }
+
+}, 30);
+
+
+/* CARRUSEL */
+
+let actual = 0;
+
+const cards = document.querySelectorAll(".card");
+
+function siguiente(){
+
+    cards[actual].classList.remove("active");
+
+    actual++;
+
+    if(actual >= cards.length){
+        actual = 0;
+    }
+
+    cards[actual].classList.add("active");
+}
+
+
+/* CAMBIO AUTOMÁTICO */
+
+setInterval(() => {
+    siguiente();
+}, 3500);
+
+</script>
+
+</body>
+</html>
